@@ -153,8 +153,10 @@ export default class SidebarRight extends React.Component {
 
         const channel = this.props.channel;
 
+
         let channelDisplayName = '';
         if (channel) {
+            console.log('channel')
             if (channel.type === Constants.DM_CHANNEL || channel.type === Constants.GM_CHANNEL) {
                 channelDisplayName = Utils.localizeMessage('rhs_root.direct', 'Direct Message');
             } else {
@@ -198,6 +200,8 @@ export default class SidebarRight extends React.Component {
             expandedClass = '';
         }
 
+        //TODO: place to customize right-side bar content
+        
         return (
             <div
                 className={'sidebar--right ' + expandedClass}

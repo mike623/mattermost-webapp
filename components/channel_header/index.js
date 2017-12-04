@@ -12,7 +12,7 @@ import {getMyTeamMember} from 'mattermost-redux/selectors/entities/teams';
 import {getCurrentUser, getStatusForUserId, getUser} from 'mattermost-redux/selectors/entities/users';
 import {getUserIdFromChannelName, isDefault, isFavoriteChannel} from 'mattermost-redux/utils/channel_utils';
 
-import {showFlaggedPosts, showPinnedPosts, showMentions, closeRightHandSide} from 'actions/views/rhs';
+import {showFlaggedPosts, showPinnedPosts, showMentions, closeRightHandSide, showProjectDetail} from 'actions/views/rhs';
 
 import {getRhsState} from 'selectors/rhs';
 
@@ -54,7 +54,8 @@ function mapDispatchToProps(dispatch) {
             showFlaggedPosts,
             showPinnedPosts,
             showMentions,
-            closeRightHandSide
+            closeRightHandSide,
+            showProjectDetail
         }, dispatch)
     };
 }

@@ -384,7 +384,8 @@ export const RHSStates = {
     MENTION: 'mention',
     SEARCH: 'search',
     FLAG: 'flag',
-    PIN: 'pin'
+    PIN: 'pin',
+    PROJECT: 'project'
 };
 
 export const Constants = {

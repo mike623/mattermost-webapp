@@ -166,6 +166,12 @@ export function showMentions() {
     };
 }
 
+export function showProjectDetail() {
+    return (dispatch, getState) => {
+        dispatch(updateRhsState(RHSStates.PROJECT));
+    };
+}
+
 export function closeRightHandSide() {
     return (dispatch) => {
         dispatch(updateRhsState(null));

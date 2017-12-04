@@ -44,6 +44,7 @@ function mapStateToProps(state) {
         postRightVisible: Boolean(getSelectedPostId(state)),
         searchVisible: Boolean(rhsState),
         previousRhsState: getPreviousRhsState(state),
+        isProjectDetail: rhsState === RHSStates.PROJECT,
         isMentionSearch: rhsState === RHSStates.MENTION,
         isFlaggedPosts: rhsState === RHSStates.FLAG,
         isPinnedPosts: rhsState === RHSStates.PIN

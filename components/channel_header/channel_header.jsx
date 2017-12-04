@@ -59,7 +59,8 @@ export default class ChannelHeader extends React.Component {
             showFlaggedPosts: PropTypes.func.isRequired,
             showPinnedPosts: PropTypes.func.isRequired,
             showMentions: PropTypes.func.isRequired,
-            closeRightHandSide: PropTypes.func.isRequired
+            closeRightHandSide: PropTypes.func.isRequired,
+            showProjectDetail: PropTypes.func.isRequired
         }).isRequired
     }
 
@@ -131,6 +132,14 @@ export default class ChannelHeader extends React.Component {
             this.props.actions.closeRightHandSide();
         } else {
             this.props.actions.showPinnedPosts();
+        }
+    }
+    getProjectSideBar = (e) => {
+        e.preventDefault();
+        if (this.props.rhsState === RHSStates.PROJECT) {
+            this.props.actions.closeRightHandSide();
+        } else {
+            this.props.actions.showProjectDetail();
         }
     }
 
@@ -908,6 +917,22 @@ export default class ChannelHeader extends React.Component {
                                     dangerouslySetInnerHTML={{__html: pinIcon}}
                                     aria-hidden='true'
                                 />
+                            </button>
+                        </OverlayTrigger>
+                    </div>
+                    <div className='flex-child'>
+                        <OverlayTrigger
+                            trigger={['hover', 'focus']}
+                            delayShow={Constants.OVERLAY_TIME_DELAY}
+                            placement='bottom'
+                            overlay={pinnedPostTooltip}
+                        >
+                            <button
+                                id='channelHeaderPinButton'
+                                className={'style--none ' + pinnedIconClass}
+                                onClick={this.getProjectSideBar}
+                            >
+                               project
                             </button>
                         </OverlayTrigger>
                     </div>
