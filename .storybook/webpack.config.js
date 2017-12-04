@@ -6,7 +6,6 @@
 // When you add this file, we won't add the default configurations which is similar
 // to "React Create App". This only has babel loader to load JavaScript.
 const path = require('path');
-console.log(path.resolve(__dirname, '..'))
 
 module.exports = {
   resolve: {
@@ -23,7 +22,21 @@ module.exports = {
   ],
   module: {
     rules: [
-      // add your custom rules.
+      {
+        test: /\.(png|eot|tiff|svg|woff2|woff|ttf|gif|mp3|jpg)$/,
+        use: [
+            {
+                loader: 'file-loader',
+                options: {
+                    name: 'files/[hash].[ext]'
+                }
+            },
+            {
+                loader: 'image-webpack-loader',
+                options: {}
+            }
+        ]
+    },
     ],
   },
 };

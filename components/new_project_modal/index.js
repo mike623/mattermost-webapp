@@ -8,7 +8,7 @@ import {getBool} from 'mattermost-redux/selectors/entities/preferences';
 import {isCurrentUserCurrentTeamAdmin} from 'mattermost-redux/selectors/entities/teams';
 import {isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
 
-import NewChannelModal from './new_channel_modal.jsx';
+import NewChannelModal from './new_project_modal.jsx';
 
 function mapStateToProps(state, ownProps) {
     return {
