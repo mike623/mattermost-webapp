@@ -27,7 +27,7 @@
     "localforage-observable": "1.4.0",
     "marked": "mattermost/marked#802e981ade71149a497cbe79d12b8a3f82f7657e",
     "match-at": "0.1.1",
-    "mattermost-redux": "https://github.com/mattermost/mattermost-redux.git#fb083f67b5560ff64fe251415460a1af5d690e5a",
+    "mattermost-redux": "^1.0.1",
     "object-assign": "4.1.1",
     "pdfjs-dist": "2.0.106",
     "perfect-scrollbar": "0.8.1",
@@ -105,6 +105,7 @@
     "style-loader": "0.19.0",
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
+    "webpack-dev-server": "^2.9.5",
     "webpack-node-externals": "1.6.0"
   },
   "jest": {
@@ -150,6 +151,7 @@
     "check": "eslint --ext \".jsx\" --ignore-pattern node_modules --quiet .",
     "build": "cross-env NODE_ENV=production webpack --display-error-details --verbose --progress",
     "run": "cross-env NODE_ENV=production webpack --progress --watch",
+    "dev": "webpack-dev-server --progress  --color --debug --config webpack.config.js",
     "run-fullmap": "webpack --progress --watch",
     "test": "jest",
     "updatesnapshot": "jest --updateSnapshot",

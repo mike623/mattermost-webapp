@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const NPM_TARGET = process.env.npm_lifecycle_event; //eslint-disable-line no-process-env
 
-var DEV = false;
+var DEV = true;
 var FULLMAP = false;
 var TEST = false;
 if (NPM_TARGET === 'run' || NPM_TARGET === 'run-fullmap') {
@@ -124,8 +124,34 @@ var config = {
     output: {
         path: path.join(__dirname, 'dist'),
         publicPath: '/static/',
-        filename: '[name].[hash].js',
+
+        // filename: '[name].[hash].js',
+        filename: 'bundle.js',
         chunkFilename: '[name].[chunkhash].js'
+    },
+    devServer: {
+        contentBase: path.join(__dirname, 'static'),
+        historyApiFallback: {
+            rewrites: [
+                {from: /^\/$/, to: '/static/index.html'},
+                {from: /^\//, to: '/static/index.html'},
+                {from: /./, to: '/views/404.html'}
+            ]
+        },
+
+        // hot: true,
+        // lazy: true,
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8065',
+                ws: true
+            },
+            '/hooks': {
+                target: 'http://localhost:8065',
+                ws: true
+            }
+        }
+
     },
     module: {
         rules: [
@@ -310,7 +336,7 @@ if (TEST) {
     // For some reason these break mocha. So they go here.
     config.plugins.push(
         new HtmlWebpackPlugin({
-            filename: 'root.html',
+            filename: 'index.html',
             inject: 'head',
             template: 'root.html'
         })
@@ -326,6 +352,10 @@ if (TEST) {
             {from: 'images/warning.png', to: 'images'}
         ])
     );
+}
+
+if (DEV) {
+    console.log('runing DEV env');
 }
 
 module.exports = config;
