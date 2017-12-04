@@ -36,6 +36,7 @@ import MoreChannels from 'components/more_channels';
 import MoreDirectChannels from 'components/more_direct_channels';
 
 import NewChannelFlow from './new_channel_flow.jsx';
+import NewProjectFlow from './new_project_flow';
 import SidebarHeader from './sidebar_header.jsx';
 import StatusIcon from './status_icon.jsx';
 import TutorialTip from './tutorial/tutorial_tip.jsx';
@@ -962,7 +963,15 @@ export default class Sidebar extends React.Component {
                 id='sidebar-left'
                 key='sidebar-left'
             >
-                <NewChannelFlow
+                {false && (
+                    <NewChannelFlow
+                    // use custom modal instead
+                    show={showChannelModal}
+                    channelType={this.state.newChannelModalType}
+                    onModalDismissed={this.hideNewChannelModal}
+                />
+                )}
+                <NewProjectFlow
                     show={showChannelModal}
                     channelType={this.state.newChannelModalType}
                     onModalDismissed={this.hideNewChannelModal}
