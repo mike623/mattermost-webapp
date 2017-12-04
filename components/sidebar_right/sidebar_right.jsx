@@ -18,6 +18,7 @@ import * as Utils from 'utils/utils.jsx';
 import FileUploadOverlay from 'components/file_upload_overlay.jsx';
 import RhsThread from 'components/rhs_thread';
 import SearchBox from 'components/search_bar';
+import SearchResultsHeader from 'components/search_results_header';
 import SearchResults from 'components/search_results';
 
 export default class SidebarRight extends React.Component {
@@ -29,6 +30,7 @@ export default class SidebarRight extends React.Component {
         isMentionSearch: PropTypes.bool,
         isFlaggedPosts: PropTypes.bool,
         isPinnedPosts: PropTypes.bool,
+        isProjectDetail: PropTypes.bool,
         previousRhsState: PropTypes.string,
         actions: PropTypes.shape({
             getPinnedPosts: PropTypes.func,
@@ -153,10 +155,8 @@ export default class SidebarRight extends React.Component {
 
         const channel = this.props.channel;
 
-
         let channelDisplayName = '';
         if (channel) {
-            console.log('channel')
             if (channel.type === Constants.DM_CHANNEL || channel.type === Constants.GM_CHANNEL) {
                 channelDisplayName = Utils.localizeMessage('rhs_root.direct', 'Direct Message');
             } else {
@@ -201,7 +201,19 @@ export default class SidebarRight extends React.Component {
         }
 
         //TODO: place to customize right-side bar content
-        
+        if (this.props.isProjectDetail) {
+            content = (
+                <div className='sidebar--right__content'>
+                    <div className='search-bar__container channel-header alt'>{searchForm}</div>
+                    <div>
+                        <SearchResultsHeader
+                            toggleSize={this.toggleSize}
+                        />
+                    </div>
+                </div>
+            );
+        }
+
         return (
             <div
                 className={'sidebar--right ' + expandedClass}
