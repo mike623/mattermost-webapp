@@ -5,8 +5,19 @@
 // IMPORTANT
 // When you add this file, we won't add the default configurations which is similar
 // to "React Create App". This only has babel loader to load JavaScript.
+const path = require('path');
+console.log(path.resolve(__dirname, '..'))
 
 module.exports = {
+  resolve: {
+    modules: [
+      'node_modules',
+      'non_npm_dependencies',
+      path.resolve(__dirname, '..'),
+      path.resolve(__dirname, '..', 'stories'),
+    ],
+    extensions: ['.js', '.jsx']
+  },
   plugins: [
     // your custom plugins
   ],
