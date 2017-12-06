@@ -965,13 +965,15 @@ export default class Sidebar extends React.Component {
             >
                 {false && (
                     <NewChannelFlow
+
                     // use custom modal instead
-                    show={showChannelModal}
-                    channelType={this.state.newChannelModalType}
-                    onModalDismissed={this.hideNewChannelModal}
-                />
+                        show={showChannelModal}
+                        channelType={this.state.newChannelModalType}
+                        onModalDismissed={this.hideNewChannelModal}
+                    />
                 )}
                 <NewProjectFlow
+                    currentChannelsNumber={(this.state.publicChannels || []).length}
                     show={showChannelModal}
                     channelType={this.state.newChannelModalType}
                     onModalDismissed={this.hideNewChannelModal}
@@ -1019,12 +1021,17 @@ export default class Sidebar extends React.Component {
                         </li>
                         {favoriteItems}
                     </ul>}
+                    <button
+                        className='btn btn-primary'
+                        onClick={this.showNewChannelModal.bind(this, Constants.OPEN_CHANNEL)}>
+                        Create new Project
+                    </button>
                     <ul className='nav nav-pills nav-stacked'>
                         <li>
                             <h4 id='publicChannel'>
                                 <FormattedMessage
-                                    id='sidebar.channels'
-                                    defaultMessage='PUBLIC CHANNELS'
+                                    id='sidebar.project'
+                                    defaultMessage='Draft Projects'
                                 />
                                 {createPublicChannelIcon}
                             </h4>

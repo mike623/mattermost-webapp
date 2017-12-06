@@ -40,7 +40,9 @@ export default class NewChannelFlow extends React.Component {
             channelName: '',
             channelPurpose: '',
             channelHeader: '',
-            nameModified: false
+            nameModified: false,
+            // init
+            projectData: {screeningQuestions: []}
         };
     }
     componentWillReceiveProps(nextProps) {
@@ -54,7 +56,8 @@ export default class NewChannelFlow extends React.Component {
                 channelName: '',
                 channelPurpose: '',
                 channelHeader: '',
-                nameModified: false
+                nameModified: false,
+                projectData: {screeningQuestions: []}
             });
         }
     }
@@ -63,7 +66,6 @@ export default class NewChannelFlow extends React.Component {
             this.setState({serverError: Utils.localizeMessage('channel_flow.invalidName', 'Invalid Channel Name')});
             return;
         }
-
         if (this.state.channelName < 2) {
             this.setState({flowState: SHOW_EDIT_URL_THEN_COMPLETE});
             return;
@@ -77,14 +79,12 @@ export default class NewChannelFlow extends React.Component {
             header: this.state.channelHeader,
             type: this.state.channelType
         };
-
         createChannel(
             channel,
             (data) => {
                 this.doOnModalExited = () => {
                     browserHistory.push(TeamStore.getCurrentTeamRelativeUrl() + '/channels/' + data.name);
                 };
-
                 this.props.onModalDismissed();
             },
             (err) => {
@@ -138,14 +138,15 @@ export default class NewChannelFlow extends React.Component {
         this.setState({flowState: SHOW_NEW_CHANNEL});
     }
     channelDataChanged(data) {
+        const {displayName, purpose, header, projectData, ...rest} = data;
         this.setState({
-            channelDisplayName: data.displayName,
-            channelPurpose: data.purpose,
-            channelHeader: data.header
+            channelDisplayName: `${displayName}_${this.props.currentChannelsNumber + 1 || Date.now()}`,
+            channelName: cleanUpUrlable(`${displayName}_${this.props.currentChannelsNumber + 1 || Date.now()}`.trim()),
+            channelPurpose: purpose,
+            channelHeader: header,
+            projectData,
+            ...rest
         });
-        if (!this.state.nameModified) {
-            this.setState({channelName: cleanUpUrlable(data.displayName.trim())});
-        }
     }
     render() {
         const channelData = {
@@ -204,6 +205,7 @@ export default class NewChannelFlow extends React.Component {
                     show={showChannelModal}
                     channelType={'O'}
                     channelData={channelData}
+                    projectData={this.state.projectData}
                     serverError={this.state.serverError}
                     onSubmitChannel={this.doSubmit}
                     onModalDismissed={this.props.onModalDismissed}
@@ -235,5 +237,6 @@ NewChannelFlow.defaultProps = {
 NewChannelFlow.propTypes = {
     show: PropTypes.bool.isRequired,
     channelType: PropTypes.string.isRequired,
-    onModalDismissed: PropTypes.func.isRequired
+    onModalDismissed: PropTypes.func.isRequired,
+    currentChannelsNumber: PropTypes.number
 };

@@ -39,7 +39,9 @@ export default class ChangeUrlModal extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.show === true && prevProps.show === false) {
-            ReactDOM.findDOMNode(this.refs.urlinput).select();
+            console.log(ReactDOM.findDOMNode(this.refs.urlinput));
+
+            // ReactDOM.findDOMNode(this.refs.urlinput).select();
         }
     }
 

@@ -9,25 +9,14 @@ import {Modal} from 'react-bootstrap';
 import ReactDOM from 'react-dom';
 import {FormattedMessage} from 'react-intl';
 
-// HACK
-const ChannelUtils = {
-    showCreateOption: ()=>{}
-}
-const UserAgent = {
-    isInternetExplorer: ()=> false,
-    isEdge: ()=> false
-}
-const Utils = {
-    localizeMessage: ()=> null
-}
-const ChannelConstantsUtils = {
-}
-const getShortenedURL = ()=>{}
-// import * as ChannelUtils from 'utils/channel_utils.jsx';
+import * as ChannelUtils from 'utils/channel_utils.jsx';
 import Constants from 'utils/constants.jsx';
-// import {getShortenedURL} from 'utils/url.jsx';
-// import * as UserAgent from 'utils/user_agent.jsx';
-// import * as Utils from 'utils/utils.jsx';
+
+import {getShortenedURL} from 'utils/url.jsx';
+import * as UserAgent from 'utils/user_agent.jsx';
+import * as Utils from 'utils/utils.jsx';
+
+import DynamicInput from 'components/dynamic_input';
 
 export default class NewChannelModal extends React.PureComponent {
     static propTypes = {
@@ -104,7 +93,9 @@ export default class NewChannelModal extends React.PureComponent {
     }
 
     static defaultProps = {
-        projectData: {},
+        projectData: {
+            screeningQuestions: []
+        },
         channelData: {}
     }
 
@@ -150,26 +141,37 @@ export default class NewChannelModal extends React.PureComponent {
     handleSubmit(e) {
         e.preventDefault();
 
-        const displayName = ReactDOM.findDOMNode(this.refs.display_name).value.trim();
+        const displayName = this.props.channelData.displayName;
+
         if (displayName.length < Constants.MIN_CHANNELNAME_LENGTH) {
             this.setState({displayNameError: true});
             return;
         }
-
         this.props.onSubmitChannel();
     }
 
-    handleChange() {
+    handleDynamicInputChange = (data) => {
         const newData = {
-            displayName: this.refs.display_name.value,
-            header: this.refs.channel_header.value,
-            purpose: this.refs.channel_purpose.value
+            ...this.props.channelData,
+            projectData: Object.assign({}, this.props.projectData, {screeningQuestions: data})
         };
         this.props.onDataChanged(newData);
     }
 
-    addNewQuestion = () => {
-        
+    handleChange() {
+        const projectData = {
+            clientRequest: this.refs.clientRequest.value,
+            preference: this.refs.preference.value,
+            screeningQuestions: this.props.projectData.screeningQuestions || []
+        };
+
+        // can decorate channel on here
+        const newData = {
+            displayName: 'Project',
+            projectData
+        };
+
+        this.props.onDataChanged(newData);
     }
 
     render() {
@@ -326,25 +328,38 @@ export default class NewChannelModal extends React.PureComponent {
                                     <label className='form__label control-label'>
                                         <FormattedMessage
                                             id='channel_modal.screeningQuestions'
-                                            defaultMessage='3. Screening questions?(Optional, one line one question)'
+                                            defaultMessage='3. Screening questions?'
                                         />
                                     </label>
                                 </div>
-                                <div style={{display: 'flex'}}>
-                                    <input
-                                        id={inputPrefixId + 'screeningQuestions'}
-                                        onChange={this.handleChange}
-                                        type='text'
-                                        ref='display_name'
-                                        className='form-control'
-                                        value={this.props.channelData.displayName}
-                                        autoFocus={true}
-                                        tabIndex='1'
-                                    />
-                                    <button class="btn btn-primary" data-role="add" onClick={this.addNewQuestion}>
-                                        <span class="glyphicon glyphicon-plus"></span>
-                                    </button>
-                                </div>
+
+                                <DynamicInput
+                                    onChange={this.handleDynamicInputChange}
+                                >
+                                    {(index, remove, onChange, type) => (
+                                        <div style={{display: 'flex', margin: '5px 0'}}>
+                                            <input
+                                                id={inputPrefixId + 'screeningQuestions'}
+                                                onChange={(e) => onChange(index, e.target.value)}
+                                                type='text'
+                                                ref={'screening_questions'}
+                                                className='form-control'
+                                                value={this.props.projectData.screeningQuestions[index]}
+                                                autoFocus={true}
+                                                tabIndex='1'
+                                            />
+                                            <button
+                                                className='btn btn-primary' data-role='add' onClick={(e) => {
+                                                    e.preventDefault();
+                                                    remove(index);
+                                                }}
+                                            >
+                                                <span className={`glyphicon glyphicon-${type}`}/>
+                                            </button>
+                                        </div>
+                                    )}
+                                </DynamicInput>
+
                             </div>
                             <div className='form-group'>
                                 <div className=''>
@@ -387,8 +402,8 @@ export default class NewChannelModal extends React.PureComponent {
                                 tabIndex='3'
                             >
                                 <FormattedMessage
-                                    id='channel_modal.createNew'
-                                    defaultMessage='Create New Channel'
+                                    id='project_modal.createNew'
+                                    defaultMessage='Create New Draft Project'
                                 />
                             </button>
                         </Modal.Footer>
