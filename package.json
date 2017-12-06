@@ -154,7 +154,7 @@
     "check": "eslint --ext \".jsx\" --ignore-pattern node_modules --quiet .",
     "build": "cross-env NODE_ENV=production webpack --display-error-details --verbose --progress",
     "run": "cross-env NODE_ENV=production webpack --progress --watch",
-    "dev": "webpack-dev-server --progress  --color --debug --config webpack.config.js",
+    "dev": "webpack-dev-server --progress  --color --debug --hot --config webpack.config.js",
     "run-fullmap": "webpack --progress --watch",
     "test": "jest",
     "updatesnapshot": "jest --updateSnapshot",
