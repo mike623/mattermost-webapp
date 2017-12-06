@@ -338,6 +338,7 @@ export async function createChannel(channel, success, error) {
     } else if (err && error) {
         error({id: err.server_error_id, ...err});
     }
+    return data;
 }
 
 export async function updateChannelPurpose(channelId, purpose, success, error) {

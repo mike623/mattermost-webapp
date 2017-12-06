@@ -7,6 +7,7 @@
   "private": true,
   "dependencies": {
     "autolinker": "1.6.0",
+    "axios": "^0.17.1",
     "bootstrap": "3.3.7",
     "bootstrap-colorpicker": "2.5.2",
     "chart.js": "2.7.1",
@@ -55,6 +56,9 @@
     "xregexp": "3.2.0"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.2.17",
+    "@storybook/addon-links": "^3.2.17",
+    "@storybook/react": "^3.2.17",
     "babel-cli": "6.26.0",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
@@ -106,10 +110,7 @@
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
     "webpack-dev-server": "^2.9.5",
-    "webpack-node-externals": "1.6.0",
-    "@storybook/react": "^3.2.17",
-    "@storybook/addon-actions": "^3.2.17",
-    "@storybook/addon-links": "^3.2.17"
+    "webpack-node-externals": "1.6.0"
   },
   "jest": {
     "snapshotSerializers": [

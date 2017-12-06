@@ -7,6 +7,7 @@ import {FormattedMessage} from 'react-intl';
 import {browserHistory} from 'react-router';
 
 import {createChannel} from 'actions/channel_actions.jsx';
+import {createProject} from 'actions/project_actions.jsx';
 import TeamStore from 'stores/team_store.jsx';
 
 import {cleanUpUrlable} from 'utils/url.jsx';
@@ -41,6 +42,7 @@ export default class NewChannelFlow extends React.Component {
             channelPurpose: '',
             channelHeader: '',
             nameModified: false,
+
             // init
             projectData: {screeningQuestions: []}
         };
@@ -61,7 +63,7 @@ export default class NewChannelFlow extends React.Component {
             });
         }
     }
-    doSubmit() {
+    async doSubmit() {
         if (!this.state.channelDisplayName) {
             this.setState({serverError: Utils.localizeMessage('channel_flow.invalidName', 'Invalid Channel Name')});
             return;
@@ -79,13 +81,14 @@ export default class NewChannelFlow extends React.Component {
             header: this.state.channelHeader,
             type: this.state.channelType
         };
-        createChannel(
+
+        const data = await createChannel(
             channel,
             (data) => {
-                this.doOnModalExited = () => {
-                    browserHistory.push(TeamStore.getCurrentTeamRelativeUrl() + '/channels/' + data.name);
-                };
-                this.props.onModalDismissed();
+                // this.doOnModalExited = () => {
+                //     browserHistory.push(TeamStore.getCurrentTeamRelativeUrl() + '/channels/' + data.name);
+                // };
+                // this.props.onModalDismissed();
             },
             (err) => {
                 if (err.id === 'model.channel.is_valid.2_or_more.app_error') {
@@ -107,6 +110,17 @@ export default class NewChannelFlow extends React.Component {
                 this.setState({serverError: err.message});
             }
         );
+        const channelId = data.id;
+        const projectData = this.state.projectData;
+        try {
+            await createProject(channelId, projectData);
+            this.doOnModalExited = () => {
+                browserHistory.push(TeamStore.getCurrentTeamRelativeUrl() + '/channels/' + data.name);
+            };
+            this.props.onModalDismissed();
+        } catch (error) {
+            console.error(error);
+        }
     }
     onModalExited() {
         if (this.doOnModalExited) {
