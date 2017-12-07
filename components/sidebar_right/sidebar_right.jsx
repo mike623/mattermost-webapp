@@ -18,8 +18,8 @@ import * as Utils from 'utils/utils.jsx';
 import FileUploadOverlay from 'components/file_upload_overlay.jsx';
 import RhsThread from 'components/rhs_thread';
 import SearchBox from 'components/search_bar';
-import SearchResultsHeader from 'components/search_results_header';
 import SearchResults from 'components/search_results';
+import ProjectSide from 'components/project_side';
 
 export default class SidebarRight extends React.Component {
     static propTypes = {
@@ -205,12 +205,11 @@ export default class SidebarRight extends React.Component {
             content = (
                 <div className='sidebar--right__content'>
                     <div className='search-bar__container channel-header alt'>{searchForm}</div>
-                    <div>
-                        <SearchResultsHeader
-                            toggleSize={this.toggleSize}
-                        />
-                    </div>
+                    <ProjectSide
+                        toggleSize={this.toggleSize}
+                    />
                 </div>
+
             );
         }
 
