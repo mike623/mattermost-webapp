@@ -133,8 +133,8 @@ var config = {
         contentBase: path.join(__dirname, 'static'),
         historyApiFallback: {
             rewrites: [
-                {from: /^\/$/, to: '/static/index.html'},
-                {from: /^\//, to: '/static/index.html'},
+                {from: /^\/$/, to: '/static/root.html'},
+                {from: /^\//, to: '/static/root.html'},
                 {from: /./, to: '/views/404.html'}
             ]
         },
@@ -336,7 +336,7 @@ if (TEST) {
     // For some reason these break mocha. So they go here.
     config.plugins.push(
         new HtmlWebpackPlugin({
-            filename: 'index.html',
+            filename: 'root.html',
             inject: 'head',
             template: 'root.html'
         })
