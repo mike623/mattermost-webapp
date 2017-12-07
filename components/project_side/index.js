@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import SearchResultsHeader from 'components/search_results_header';
 import ExpertList from 'components/expert_list';
 import ProjectDetail from 'components/project_detail';
+import ConsultationsList from 'components/consultations_list';
 import PropTypes from 'prop-types';
 
 const titleMap = {
@@ -59,6 +60,7 @@ class ProjectDetailPage extends Component {
 
                 {this.state.viewPage === 'EXPERTS' && <ExpertList/>}
                 {this.state.viewPage === 'PROJECT' && <ProjectDetail/>}
+                {this.state.viewPage === 'CONSULTATIONS' && <ConsultationsList/>}
             </div>
         );
     }
