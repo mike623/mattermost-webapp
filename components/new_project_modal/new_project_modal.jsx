@@ -15,6 +15,8 @@ import Constants from 'utils/constants.jsx';
 import {getShortenedURL} from 'utils/url.jsx';
 import * as UserAgent from 'utils/user_agent.jsx';
 import * as Utils from 'utils/utils.jsx';
+import moment from 'moment';
+import DatePicker from 'react-datepicker';
 
 import DynamicInput from 'components/dynamic_input';
 
@@ -94,7 +96,8 @@ export default class NewChannelModal extends React.PureComponent {
 
     static defaultProps = {
         projectData: {
-            screeningQuestions: []
+            screeningQuestions: [],
+            deadline: moment()
         },
         channelData: {}
     }
@@ -157,12 +160,19 @@ export default class NewChannelModal extends React.PureComponent {
         };
         this.props.onDataChanged(newData);
     }
+    handleDateChange = (dateMomentObject) => {
+        const newData = {
+            ...this.props.channelData,
+            projectData: Object.assign({}, this.props.projectData, {deadline: dateMomentObject.toISOString()})
+        };
+        this.props.onDataChanged(newData);
+    }
 
     handleChange() {
         const projectData = {
+            ...this.props.projectData,
             clientRequest: this.refs.clientRequest.value,
-            preference: this.refs.preference.value,
-            screeningQuestions: this.props.projectData.screeningQuestions || []
+            preference: this.refs.preference.value
         };
 
         // can decorate channel on here
@@ -370,16 +380,11 @@ export default class NewChannelModal extends React.PureComponent {
                                         />
                                     </label>
                                 </div>
-                                <div className=''>
-                                    <textarea
-                                        id={inputPrefixId + 'deadline'}
-                                        className='form-control no-resize'
-                                        ref='deadline'
-                                        rows='4'
-                                        maxLength='250'
-                                        value={this.props.projectData.deadline}
-                                        onChange={this.handleChange}
-                                        tabIndex='2'
+                                <div style={{marginTop: 10}}>
+                                    <DatePicker
+                                        inline={true}
+                                        selected={moment(this.props.projectData.deadline)}
+                                        onChange={this.handleDateChange}
                                     />
                                 </div>
                             </div>

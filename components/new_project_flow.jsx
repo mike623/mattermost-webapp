@@ -16,6 +16,7 @@ import * as Utils from 'utils/utils.jsx';
 import NewProjectModal from 'components/new_project_modal';
 
 import ChangeURLModal from './change_url_modal.jsx';
+import moment from 'moment';
 
 const SHOW_NEW_CHANNEL = 1;
 const SHOW_EDIT_URL = 2;
@@ -44,7 +45,7 @@ export default class NewChannelFlow extends React.Component {
             nameModified: false,
 
             // init
-            projectData: {screeningQuestions: []}
+            projectData: {screeningQuestions: [], deadline: moment()}
         };
     }
     componentWillReceiveProps(nextProps) {
@@ -59,7 +60,7 @@ export default class NewChannelFlow extends React.Component {
                 channelPurpose: '',
                 channelHeader: '',
                 nameModified: false,
-                projectData: {screeningQuestions: []}
+                projectData: {screeningQuestions: [], deadline: moment()}
             });
         }
     }
