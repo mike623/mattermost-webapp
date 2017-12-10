@@ -106,7 +106,7 @@ export default class PostAttachment extends React.PureComponent {
             buttons.push(
                 <button
                     key={action.id}
-                    onClick={() => this.handleActionButtonClick(action.id)}
+                    onClick={() => this.handleActionButtonClick(action.id, action)}
                 >
                     {action.name}
                 </button>
@@ -122,9 +122,7 @@ export default class PostAttachment extends React.PureComponent {
         );
     }
 
-    handleActionButtonClick = (actionId) => {
-        console.log('handleActionButtonClick', actionId)
-        // extraction lynk action
+    handleActionButtonClick = (actionId, action) => {
         if (`${actionId}`.includes('LYNK_')) {
             this.doLynkAction(this.props.postId, actionId);
         } else {
