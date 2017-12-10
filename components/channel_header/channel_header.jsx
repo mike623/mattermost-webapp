@@ -25,6 +25,7 @@ import ChannelMembersModal from 'components/channel_members_modal.jsx';
 import ChannelNotificationsModal from 'components/channel_notifications_modal.jsx';
 import DeleteChannelModal from 'components/delete_channel_modal';
 import EditChannelHeaderModal from 'components/edit_channel_header_modal';
+import RejectExpertReasonModal from 'components/reject_expert_reason_modal';
 import EditChannelPurposeModal from 'components/edit_channel_purpose_modal';
 import MessageWrapper from 'components/message_wrapper.jsx';
 import PopoverListMembers from 'components/popover_list_members';
@@ -986,6 +987,7 @@ export default class ChannelHeader extends React.Component {
                 {editHeaderModal}
                 {editPurposeModal}
                 {channelMembersModal}
+                <RejectExpertReasonModal />
                 <RenameChannelModal
                     show={this.state.showRenameChannelModal}
                     onHide={this.hideRenameChannelModal}

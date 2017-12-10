@@ -122,8 +122,18 @@ export default class PostAttachment extends React.PureComponent {
         );
     }
 
-    handleActionButtonClick(actionId) {
-        PostActions.doPostAction(this.props.postId, actionId);
+    handleActionButtonClick = (actionId) => {
+        console.log('handleActionButtonClick', actionId)
+        // extraction lynk action
+        if (`${actionId}`.includes('LYNK_')) {
+            this.doLynkAction(this.props.postId, actionId);
+        } else {
+            PostActions.doPostAction(this.props.postId, actionId);
+        }
+    }
+
+    doLynkAction = (postId, actionId) => {
+        console.log('actionId', actionId);
     }
 
     getFieldsTable() {
